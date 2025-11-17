@@ -1,0 +1,933 @@
+/* --- Beautiful Clean Dashboard --- */
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+
+/* Header */
+.header-card {
+  background: #fff;
+  padding: 18px 22px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  margin-bottom: 18px;
+  border: 1px solid #e5e7eb;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 24px;
+}
+
+.app-subtitle {
+  margin: 6px 0 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Top action row */
+.top-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.task-create-box {
+  flex: 3;
+}
+
+.filter-box {
+  flex: 1;
+  background: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  border: 1px solid #e5e7eb;
+}
+
+.filter-box label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.filter-box select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* Tasks Grid */
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 16px;
+}
+
+/* Card */
+.task-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.task-title {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.task-desc {
+  color: #6b7280;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+.task-row {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.task-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-edit {
+  background: #2563eb;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: #dc2626;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.empty-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+  color: #6b7280;
+}
+
+.muted {
+  color: #6b7280;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+}
+
+.fade-in {
+  animation: fadeIn .4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+
+/* ---- Auth (Login/Signup) styles matching dashboard theme ---- */
+
+.auth-page {
+  min-height: calc(100vh - 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 16px;
+  background: linear-gradient(180deg, #f8fafc 0%, #f3f6fb 100%);
+}
+
+/* Card wrapper (split layout) */
+.auth-card {
+  max-width: 920px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 18px;
+  align-items: center;
+  padding: 22px;
+  border-radius: 14px;
+}
+
+/* Left area: welcome + demo info */
+.auth-left {
+  padding: 8px 6px;
+}
+.auth-title {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+}
+.demo-credentials {
+  margin-top: 14px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #eef2ff;
+}
+
+/* Right area: form */
+.auth-form {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid #eef2ff;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.04);
+}
+
+.form-grid {
+  display: grid;
+  gap: 10px;
+}
+.label { font-size: 13px; color: #6b7280; }
+
+.form-grid input[type="email"],
+.form-grid input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e6eef8;
+  background: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Primary button */
+.btn-primary { 
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 0;
+  background: #065fd4;
+  color: #fff;
+  font-weight:700;
+  margin-top:6px;
+  cursor:pointer;
+}
+
+/* Link-styled button */
+.link-btn {
+  background: transparent;
+  border: 0;
+  color: #065fd4;
+  padding: 0;
+  font-weight:600;
+  cursor: pointer;
+}
+
+/* Error */
+.error { color: #991b1b; background: #fff1f2; padding:8px; border-radius:8px; border:1px solid #fecaca; }
+
+/* Small text */
+.tiny { font-size: 12px; }
+.muted { color: #6b7280; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .auth-card { grid-template-columns: 1fr; padding: 16px; }
+  .auth-form { order: 2; }
+  .auth-left { order: 1; }
+}
+
+
+
+
+/* ----- CENTERED AUTH PAGE ----- */
+
+.auth-center-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(180deg, #f8fafc 0%, #f3f6fb 100%);
+}
+
+.auth-main-title {
+  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.auth-center-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+.auth-welcome {
+  margin: 0;
+  font-size: 22px;
+}
+
+.auth-subtitle {
+  margin: 6px 0 20px 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Form */
+.auth-form-grid {
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
+
+.auth-form-grid input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e6eef8;
+  background: #f8fafc;
+}
+
+/* Buttons */
+.btn-primary {
+  padding: 10px;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  background: #065fd4;
+  color: white;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.link-btn {
+  background: transparent;
+  border: none;
+  color: #065fd4;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Footer */
+.auth-footer {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+/* Demo Box */
+.demo-box {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #eef2ff;
+  background: #fafbff;
+  text-align: left;
+}
+/* ===== CONSISTENT FORM & BUTTON STYLES ===== */
+
+/* General inputs & selects (applies globally) */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6eef8;
+  background: #fbfdff;    /* subtle white */
+  color: #0f1724;
+  font-size: 14px;
+  outline: none;
+  box-shadow: none;
+  transition: box-shadow .12s ease, transform .08s ease;
+}
+
+input[type="date"] {
+  /* make date input visually consistent (some browsers show inner chrome) */
+  background: #fbfdff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 40px;
+}
+
+/* focus state */
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: 0 4px 14px rgba(37,99,235,0.06);
+  border-color: #cfe2ff;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Primary action (Create, Sign in etc) */
+.btn-primary {
+  background: #065fd4;
+  color: #fff;
+  border-color: #065fd4;
+}
+
+/* Secondary ghost */
+.btn-ghost {
+  background: transparent;
+  color: #0f1724;
+  border-color: #e6eef8;
+}
+
+/* Danger (delete) */
+.btn-danger {
+  background: #dc2626;
+  color: #fff;
+  border-color: #dc2626;
+}
+
+/* small button look (edit/delete inside card) */
+.small-btn {
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* logout button in top-left */
+.logout-btn {
+  display: inline-block;
+  padding: 8px 12px;
+  margin-left: 10px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e6eef8;
+  color: #0f1724;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* container for the create form so it aligns nicely with header */
+.task-create-box {
+  margin-top: 12px;
+  width: 100%;
+  max-width: 820px; /* matches card width */
+}
+
+/* if TaskForm renders inline inputs we give them a row layout */
+.task-create-box .task-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.task-create-box .task-form .input {
+  min-width: 0;
+  flex: 1;
+}
+.task-create-box .task-form input[type="date"] {
+  max-width: 170px;
+}
+
+/* make sure the create button in the TaskForm uses primary style */
+.task-create-box .btn-primary {
+  white-space: nowrap;
+}
+
+/* small responsive adjustments */
+@media (max-width: 860px) {
+  .task-create-box .task-form { flex-direction: column; align-items: stretch; }
+  .task-create-box .task-form input[type="date"] { max-width: 100%; }
+}
+   
+
+
+/* make header title and logout look consistent */
+.app-shell header { background: transparent; }
+.logout-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e6eef8;
+  color: #0f1724;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+}
+
+/* inputs / selects / date / textareas */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea,
+select {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6eef8;
+  background: #fbfdff;
+  color: #0f1724;
+  font-size: 14px;
+  outline: none;
+}
+
+/* small fix for date control on some browsers */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+/* TaskForm specific container */
+.task-form .input { min-width: 0; }
+.task-form .input[ type="date" ] { max-width: 180px; }
+
+/* primary button */
+.btn.btn-primary {
+  background: #065fd4;
+  color: #fff;
+  border: 1px solid #065fd4;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+/* keep default small edit/delete buttons consistent */
+.btn.btn-ghost { background: transparent; border: 1px solid #e6eef8; color: #0f1724; }
+.btn.btn-danger { background: #dc2626; color: #fff; border: 1px solid #dc2626; }
+
+/* header card title */
+.header-card .app-title { font-size: 20px; font-weight: 800; color: #111827; }
+.header-card .app-subtitle { color: #6b7280; }
+
+/* ------- TASK FORM FIXES (THIS IS WHAT YOU MISS) ------- */
+
+.task-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+}
+
+.task-input {
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  border: 1px solid #e5e7eb !important;
+  background: #ffffff !important;
+  font-size: 14px;
+  flex: 1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
+}
+
+.task-input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.2) !important;
+}
+
+.create-task-btn {
+  white-space: nowrap;
+  padding: 11px 20px !important;
+  border-radius: 10px !important;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Responsive fix for small screens */
+@media (max-width: 900px) {
+  .task-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .create-task-btn {
+    width: 100%;
+  }
+}
+
+
+
+/* ===== TASK FORM GRID (fixed widths + responsive) ===== */
+
+.task-form-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr 180px 160px; /* title, desc (grow), date, action */
+  gap: 12px;
+  align-items: end;
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* field container and labels */
+.field { display:flex; flex-direction:column; gap:8px; }
+.field-grow { min-width: 0; } /* allows description to shrink nicely */
+
+.field label {
+  font-size: 13px;
+  color: #374151;
+  font-weight: 600;
+}
+
+/* inputs */
+.task-input {
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  border: 1px solid #e6eef8 !important;
+  background: #ffffff !important;
+  font-size: 14px;
+  color: #0f1724;
+  width: 100%;
+  box-shadow: 0 4px 18px rgba(2,6,23,0.04);
+  transition: box-shadow .12s ease, border-color .12s ease;
+}
+
+.task-input::placeholder { color: #94a3b8; }
+
+.task-input:focus {
+  outline: none;
+  border-color: #60a5fa !important;
+  box-shadow: 0 6px 20px rgba(96,165,250,0.12) !important;
+}
+
+/* Create button */
+.create-task-btn {
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  font-size: 15px;
+  font-weight: 700;
+  width: 100%;
+  display: inline-block;
+}
+
+/* If you want the button narrower remove width:100% above and use min-width */
+.field-action { display:flex; align-items:center; }
+
+/* Small screens => stack fields */
+@media (max-width: 920px) {
+  .task-form-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .field-action { align-self: stretch; }
+  .create-task-btn { width: 100%; }
+}
+
+
+/* ===== REPLACEMENT: robust responsive TaskForm grid (no overlap) ===== */
+
+/* ensure predictable sizing */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+/* Grid with flexible min/max widths so columns never force overlap */
+.task-form-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(180px, 260px)   /* title */
+    minmax(180px, 1fr)     /* description (flex) */
+    minmax(120px, 180px)   /* date */
+    minmax(120px, 180px);  /* action button */
+  gap: 14px;
+  align-items: end;
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* make each field a vertical stack so labels stay above */
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.field-grow { min-width: 0; }
+
+/* inputs: make sure they can shrink when grid tight */
+.task-input {
+  box-sizing: border-box;
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  border: 1px solid #e6eef8 !important;
+  background: #ffffff !important;
+  font-size: 14px;
+  color: #0f1724;
+  width: 100%;
+  min-width: 0;          /* very important to allow flex shrink */
+  box-shadow: 0 4px 18px rgba(2,6,23,0.04);
+  transition: box-shadow .12s ease, border-color .12s ease;
+}
+
+.task-input::placeholder { color: #94a3b8; }
+
+.task-input:focus {
+  outline: none;
+  border-color: #60a5fa !important;
+  box-shadow: 0 6px 20px rgba(96,165,250,0.12) !important;
+}
+
+/* action button: keep it full height of control and reasonable width */
+.field-action { display:flex; align-items:center; }
+.create-task-btn {
+  padding: 10px 16px !important;
+  border-radius: 10px !important;
+  font-size: 15px;
+  font-weight: 700;
+  width: 100%;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+/* ensure date input doesn't overflow */
+.task-input[type="date"] { max-width: 100%; }
+
+/* SMALL SCREENS: stack vertically and increase spacing */
+@media (max-width: 920px) {
+  .task-form-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .field-action { align-self: stretch; }
+  .create-task-btn { width: 100%; }
+}
+
+/* EXTRA: tiny visual breathing room for the top area */
+.task-create-box { width: 100%; max-width: 100%; }
+
+
+/* ===== Signup / Auth styling (matches dashboard theme) ===== */
+
+.auth-center-page { min-height: 100vh; display:flex; align-items:center; justify-content:center; padding:30px 16px; background: linear-gradient(180deg,#f8fafc 0%,#f3f6fb 100%); }
+.auth-card { width:100%; max-width:520px; padding:22px; border-radius:12px; background:#fff; border:1px solid #eef2ff; box-shadow:0 10px 30px rgba(2,6,23,0.04); text-align:left; }
+
+.auth-title { margin:0; font-size:20px; font-weight:800; }
+.muted { color:#6b7280; }
+
+.signup-form { margin-top:14px; display:flex; flex-direction:column; gap:12px; }
+.field { display:flex; flex-direction:column; gap:8px; }
+.field-label { font-weight:600; color:#374151; font-size:13px; }
+
+/* inputs */
+.input { padding:10px 12px; border-radius:10px; border:1px solid #e6eef8; background:#fbfdff; font-size:14px; outline:none; box-shadow:0 6px 18px rgba(2,6,23,0.04); }
+.input:focus { border-color:#60a5fa; box-shadow:0 8px 26px rgba(96,165,250,0.12); }
+
+/* radio row */
+.radio-row { display:flex; gap:12px; align-items:center; }
+.radio { display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:10px; border:1px solid transparent; cursor:pointer; }
+.radio input { transform:translateY(1px); }
+.radio-selected { background:#f8fafc; border-color:#e6eef8; }
+
+/* action buttons */
+.form-actions { display:flex; gap:10px; align-items:center; margin-top:6px; }
+.btn { padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; border:1px solid transparent; }
+.btn-primary { background:#065fd4; color:#fff; border-color:#065fd4; }
+.btn-ghost { background:transparent; color:#0f1724; border:1px solid #e6eef8; }
+
+/* link button */
+.link-btn { background:transparent; border:0; color:#065fd4; font-weight:700; cursor:pointer; padding:0; }
+
+/* messages */
+.form-msg { padding:10px; border-radius:8px; }
+.form-msg.error { background:#fff1f2; color:#991b1b; border:1px solid #fecaca; }
+.form-msg.success { background:#ecfdf5; color:#065f46; border:1px solid #bbf7d0; }
+
+/* responsive */
+@media (max-width:560px) {
+  .auth-card { padding:18px; }
+  .form-actions { flex-direction:column; align-items:stretch; }
+  .btn { width:100%; }
+}
+
+
+/* ---- improved auth card header + actions ---- */
+
+.auth-card-tight { padding: 18px 20px; max-width: 640px; width: 100%; box-sizing: border-box; }
+
+/* header split: left title, right note */
+.auth-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+/* title area */
+.auth-card-title { max-width: 60%; }
+.auth-card-note { max-width: 40%; }
+
+/* small helper */
+.small { font-size: 13px; color: #6b7280; }
+
+/* form actions: space between primary and secondary, consistent heights */
+.form-actions-space {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+/* primary + secondary buttons */
+.btn-primary {
+  background: #065fd4;
+  color: #fff;
+  border: 1px solid #065fd4;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  min-width: 160px;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #0f1724;
+  border: 1px solid #e6eef8;
+  padding: 10px 14px;
+  border-radius: 10px;
+  min-width: 120px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.04);
+}
+
+/* ensure link button is subtle */
+.link-btn { background: transparent; border: none; color: #065fd4; font-weight:700; cursor:pointer; padding:0; }
+
+/* keep radio styles comfortable */
+.radio-row { display:flex; gap:12px; align-items:center; }
+.radio { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:10px; cursor:pointer; border:1px solid transparent; }
+.radio input { margin-right:6px; }
+.radio-selected { background:#f8fafc; border-color:#e6eef8; }
+
+/* responsive adjustments so header note stacks under title on small screens */
+@media (max-width: 720px) {
+  .auth-card-header { flex-direction: column; align-items:flex-start; }
+  .auth-card-note { width:100%; text-align:left; }
+  .auth-card-title { width:100%; }
+  .form-actions-space { flex-direction: column; align-items:stretch; }
+  .btn-primary, .btn-secondary { width:100%; min-width: auto; }
+}
+
+
+/* ---- AUTH CARD: FORCE STACKED HEADER (title above note) ---- */
+
+.auth-card-stacked {
+  max-width: 640px;
+  width: 100%;
+  padding: 22px;
+  box-sizing: border-box;
+}
+
+/* stacked header: always vertical, title on top, note below */
+.auth-stacked-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+
+/* keep title larger and bold */
+.auth-title { margin: 0; font-size: 20px; font-weight: 800; }
+
+/* helper note style (below title) */
+.auth-stacked-header .muted { color: #6b7280; font-size: 14px; }
+
+/* make sure radio & fields keep spacing */
+.signup-form { margin-top: 6px; display: flex; flex-direction: column; gap: 12px; }
+
+/* form actions keep same look as before */
+.form-actions-space {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+.btn-primary { min-width: 160px; }
+.btn-secondary { min-width: 120px; }
+
+/* responsive: nothing special needed because header is stacked */
+@media (max-width: 720px) {
+  .auth-card-stacked { padding: 16px; }
+  .form-actions-space { flex-direction: column; align-items: stretch; }
+  .btn-primary, .btn-secondary { width: 100%; min-width: auto; }
+}
+
+
+
+/* =========== FORCE STACKED SIGNUP HEADER (override any earlier rules) =========== */
+
+/* ensure card uses stacked layout */
+.auth-card-stacked {
+  max-width: 640px !important;
+  width: 100% !important;
+  padding: 22px !important;
+  box-sizing: border-box !important;
+}
+
+/* guaranteed stacked header (title on top, note below) */
+.auth-stacked-header-plain {
+  display: block !important;
+  width: 100% !important;
+  margin-bottom: 14px !important;
+}
+
+/* title above note */
+.auth-stacked-header-plain .auth-title {
+  margin: 0 0 6px 0 !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+}
+
+/* helper note under title */
+.auth-stacked-header-plain .auth-subnote {
+  margin: 0 !important;
+  color: #6b7280 !important;
+  font-size: 14px !important;
+}
+
+/* remove any floats / flex that could force side-by-side */
+.auth-card-header,
+.auth-card-note,
+.auth-card-title,
+.auth-card { display: block !important; float: none !important; flex-direction: column !important; }
+
+/* safety: ensure the header's direct children won't try to align horizontally */
+.auth-card-stacked > * { display: block !important; width: 100% !important; }
+
+/* keep radio & form spacing stable */
+.signup-form { margin-top: 6px !important; display: flex !important; flex-direction: column !important; gap: 12px !important; }
+
+/* preserve button styles */
+.form-actions-space { display:flex !important; gap:12px !important; align-items:center !important; margin-top:12px !important; }
+.btn-primary, .btn-secondary { min-width: 120px !important; }
+
+/* responsiveness: stacked works the same on small screens */
+@media (max-width: 920px) {
+  .auth-card-stacked { padding: 16px !important; }
+  .form-actions-space { flex-direction: column !important; align-items: stretch !important; }
+  .btn-primary, .btn-secondary { width: 100% !important; min-width: auto !important; }
+}
