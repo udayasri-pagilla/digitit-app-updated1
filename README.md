@@ -1,27 +1,109 @@
-# digitit-app (full-stack)
+# DigitIt Task Manager  
+_A full-stack role-based task management system for Teachers and Students._
 
-This repository contains a ready-to-run full-stack application (server + client) for the DigitIt take-home assignment.
+Built as part of the DigitIt Take-Home Assignment, this application provides a clean, modern, and professional workflow for assigning, tracking, updating, and managing tasks across teacher–student workflows.
 
-Two folders:
-- server/  (Node + Express + MongoDB)
-- client/  (Vite + React)
+---
 
-Quickstart:
-1. Start MongoDB locally.
-2. Server:
-   cd server
-   npm install
-   cp .env.example .env
-   # update JWT_SECRET if desired
-   npm run seed
-   npm run dev
-3. Client:
-   cd client
-   npm install
-   npm run dev
-   Open the client at the printed Vite URL.
+## 🚀 Features
 
-Demo accounts (seed):
-- teacherA@example.com / Pass1234
-- studentX@example.com / Pass1234
-- studentY@example.com / Pass1234
+### 👥 User Roles
+- **Teacher**
+  - Can assign tasks to themselves or to their students
+  - Can view tasks created by students assigned to them
+  - Can track progress of each task
+- **Student**
+  - Can view only their own tasks
+  - Can update progress for their tasks
+  - Must be linked to a teacher (via teacher ID or email)
+
+---
+
+## 🧩 Core Functionalities
+### 🔐 Authentication
+- JWT-based login & signup
+- Role-based access control
+- Student–teacher linking during signup
+
+### 📝 Task Management
+- Create a task with:
+  - Title  
+  - Description  
+  - Due date  
+  - Progress state  
+- Update task progress using a dropdown  
+- Only task owner can edit or delete  
+- Teachers see tasks of all assigned students  
+- Students see only their tasks  
+
+### 🔎 Filtering
+- Filter tasks by **progress state:**
+  - Not started  
+  - In progress  
+  - Completed  
+
+### 🎨 Modern & Clean UI
+- Fully redesigned frontend  
+- Professional dashboard layout  
+- Fully responsive  
+- Clean typography  
+- Attractive card-based design  
+- Improved login & signup UI  
+- Smooth animations & spacing  
+
+---
+
+## 🏗 Tech Stack
+
+### Frontend  
+- React (Vite)  
+- Modern CSS (custom design system)  
+- Clean responsive layout  
+
+### Backend  
+- Node.js  
+- Express  
+- MongoDB + Mongoose  
+- JWT Authentication  
+- JOI Validation  
+
+---
+
+Running the Project Locally
+
+### Backend
+```bash
+cd server
+npm install
+npm run dev
+### Frontend:
+```bash
+cd client
+npm install
+npm run dev
+
+#### API Endpoints
+Auth
+Method	 Endpoint	Description
+POST	    /auth/signup	Registers new user
+POST	    /auth/login	Authenticates user
+Tasks
+Method	 Endpoint	Description
+GET	    /tasks	Fetch tasks (role-based)
+POST	    /tasks	Create a new task
+PUT	    /tasks/:id	Update a task
+DELETE	 /tasks/:id	Delete a task
+
+#####Why This Project Stands Out
+
+Real-world role-based permissions
+
+Clean architecture
+
+Professional UI matching modern SaaS dashboards
+
+Fully functional end-to-end assignment workflow
+
+Neatly organized code
+
+Easy to extend and deploy
