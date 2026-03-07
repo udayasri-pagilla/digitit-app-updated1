@@ -5,9 +5,16 @@ import Signup from './pages/Signup';
 
 export default function App() {
   const [userRaw, setUserRaw] = React.useState(() => {
-    const raw = localStorage.getItem('user');
+  const raw = localStorage.getItem('user');
+
+  try {
     return raw ? JSON.parse(raw) : null;
-  });
+  } catch (error) {
+    console.error("Invalid user in localStorage");
+    localStorage.removeItem('user');
+    return null;
+  }
+});
   const [token, setToken] = React.useState(() => localStorage.getItem('token') || null);
   const [page, setPage] = React.useState(userRaw ? 'dashboard' : 'login');
 

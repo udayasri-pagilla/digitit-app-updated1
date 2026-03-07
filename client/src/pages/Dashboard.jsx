@@ -360,202 +360,427 @@
 
 
 
+// import React, { useEffect, useState } from "react";
+// import { request } from "../api";
+// import TaskForm from "../shared/TaskForm";
+
+// /**
+//  * Dashboard
+//  * - user: { id, email, role, teacher? }
+//  * - token: auth token string
+//  */
+// export default function Dashboard({ user, token }) {
+//   const [tasks, setTasks] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(null);
+//   const [filter, setFilter] = useState("all");
+
+//   async function load() {
+//     setLoading(true);
+//     setError(null);
+//     try {
+//       const qs = filter === "all" ? "" : `?progress=${encodeURIComponent(filter)}`;
+//       const data = await request(`/tasks${qs}`, { token });
+//       setTasks(data.tasks || []);
+//     } catch (err) {
+//       setError(err.message || "Failed to load");
+//     } finally {
+//       setLoading(false);
+//     }
+//   }
+
+//   useEffect(() => {
+//     load();
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [filter]);
+
+//   async function createTask(payload) {
+//     try {
+//       const data = await request("/tasks", {
+//         method: "POST",
+//         token,
+//         body: payload,
+//       });
+//       // Insert new task at top
+//       setTasks((prev) => [data.task, ...prev]);
+//     } catch (err) {
+//       alert(err.message || "Create failed");
+//     }
+//   }
+
+//   async function updateTask(id, payload) {
+//     try {
+//       const data = await request(`/tasks/${id}`, {
+//         method: "PUT",
+//         token,
+//         body: payload,
+//       });
+//       setTasks((prev) => prev.map((t) => (t._id === id ? data.task : t)));
+//     } catch (err) {
+//       alert(err.message || "Update failed");
+//     }
+//   }
+
+//   async function deleteTask(id) {
+//     if (!confirm("Delete this task?")) return;
+//     try {
+//       await request(`/tasks/${id}`, { method: "DELETE", token });
+//       setTasks((prev) => prev.filter((t) => t._id !== id));
+//     } catch (err) {
+//       alert(err.message || "Delete failed");
+//     }
+//   }
+
+//   function formatDate(date) {
+//     if (!date) return "—";
+//     try {
+//       return new Date(date).toLocaleDateString("en-IN", {
+//         year: "numeric",
+//         month: "short",
+//         day: "numeric",
+//       });
+//     } catch {
+//       return date;
+//     }
+//   }
+
+//   function isOwnerOfTask(t) {
+//     // server returns userId populated (object with _id or string)
+//     if (!t || !user) return false;
+//     const ownerId = t.userId?._id ?? t.userId; // support both shapes
+//     if (!ownerId) return false;
+//     return String(ownerId) === String(user.id || user._id || user._id);
+//   }
+
+//   return (
+//     <div className="dashboard-container fade-in">
+
+//       {/* Header */}
+//       <div className="header-card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+//         <div>
+//           <h1 className="app-title">DigitIt Task Manager</h1>
+//           <p className="app-subtitle">
+//             Welcome, <strong>{user.email}</strong> • <span className="muted">{user.role}</span>
+//             {user.role === "student" && user.teacher ? <> • Teacher: {user.teacher.email}</> : null}
+//           </p>
+//         </div>
+//         {/* optional quick stats in header */}
+//         <div style={{ textAlign: "right" }}>
+//           <div className="tiny muted">Total tasks</div>
+//           <div style={{ fontWeight: 800, fontSize: 20 }}>{tasks.length}</div>
+//         </div>
+//       </div>
+
+//       {/* Top actions: create form + filter */}
+//       <div className="top-actions" style={{ alignItems: "flex-start" }}>
+//         <div className="task-create-box">
+//           <TaskForm onSubmit={createTask} />
+//         </div>
+
+//         <div className="filter-box">
+//           <label className="label">Progress</label>
+//           <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+//             <option value="all">All</option>
+//             <option value="not-started">Not started</option>
+//             <option value="in-progress">In progress</option>
+//             <option value="completed">Completed</option>
+//           </select>
+//         </div>
+//       </div>
+
+//       {/* Tasks grid */}
+//       <div className="tasks-grid" style={{ marginTop: 18 }}>
+//         {loading ? (
+//           <div className="loading">Loading tasks...</div>
+//         ) : error ? (
+//           <div className="error">{error}</div>
+//         ) : tasks.length === 0 ? (
+//           <div className="empty-box">No tasks yet</div>
+//         ) : (
+//           tasks.map((t) => {
+//             const ownerEmail = t.userId?.email ?? (typeof t.userId === "string" ? t.userId : "Unknown");
+//             const progress = t.progress || "not-started";
+//             const owner = isOwnerOfTask(t);
+
+//             return (
+//               <article key={t._id} className={`task-card fade-in card-${progress}`}>
+//                 <div className="task-title">{t.title}</div>
+
+//                 <div className="task-desc">
+//                   {t.description || <span className="muted">No description</span>}
+//                 </div>
+
+//                 <div className="task-row" style={{ marginTop: 10 }}>
+//                   <span className="muted">Owner:</span>{" "}
+//                   <strong style={{ marginLeft: 6 }}>{ownerEmail}</strong>
+//                 </div>
+
+//                 <div className="task-row">
+//                   <span className="muted">Due:</span> <span style={{ marginLeft: 6 }}>{formatDate(t.dueDate)}</span>
+//                 </div>
+
+//                 <div className="task-row" style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 8 }}>
+//                   <span className="muted">Progress:</span>
+//                   <select
+//                     value={t.progress}
+//                     onChange={(e) => updateTask(t._id, { progress: e.target.value })}
+//                     style={{ minWidth: 160 }}
+//                   >
+//                     <option value="not-started">Not started</option>
+//                     <option value="in-progress">In progress</option>
+//                     <option value="completed">Completed</option>
+//                   </select>
+//                 </div>
+
+//                 {owner && (
+//                   <div className="task-actions" style={{ marginTop: 12 }}>
+//                     <button
+//                       className="btn btn-ghost small-btn"
+//                       onClick={() => {
+//                         const newTitle = prompt("Edit task title", t.title);
+//                         if (newTitle && newTitle.trim()) updateTask(t._id, { title: newTitle.trim() });
+//                       }}
+//                     >
+//                       Edit
+//                     </button>
+//                     <button
+//                       className="btn btn-danger small-btn"
+//                       onClick={() => deleteTask(t._1?._id ? t._1._id : t._id)}
+//                     >
+//                       Delete
+//                     </button>
+//                   </div>
+//                 )}
+//               </article>
+//             );
+//           })
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+
 import React, { useEffect, useState } from "react";
 import { request } from "../api";
 import TaskForm from "../shared/TaskForm";
 
-/**
- * Dashboard
- * - user: { id, email, role, teacher? }
- * - token: auth token string
- */
 export default function Dashboard({ user, token }) {
+
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState("all");
 
-  async function load() {
+  // load tasks from backend
+  async function loadTasks() {
     setLoading(true);
     setError(null);
+
     try {
-      const qs = filter === "all" ? "" : `?progress=${encodeURIComponent(filter)}`;
+      const qs =
+        filter === "all"
+          ? ""
+          : `?progress=${encodeURIComponent(filter)}`;
+
       const data = await request(`/tasks${qs}`, { token });
-      setTasks(data.tasks || []);
+
+      // backend returns array of tasks
+      setTasks(data || []);
+
     } catch (err) {
-      setError(err.message || "Failed to load");
+      console.error(err);
+      setError("Failed to load tasks");
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    loadTasks();
   }, [filter]);
 
+
+
+  // create task
   async function createTask(payload) {
     try {
-      const data = await request("/tasks", {
+      const task = await request("/tasks", {
         method: "POST",
         token,
-        body: payload,
+        body: payload
       });
-      // Insert new task at top
-      setTasks((prev) => [data.task, ...prev]);
+
+      setTasks((prev) => [task, ...prev]);
+
     } catch (err) {
-      alert(err.message || "Create failed");
+      alert("Failed to create task");
     }
   }
 
+
+
+  // update task
   async function updateTask(id, payload) {
     try {
-      const data = await request(`/tasks/${id}`, {
+      const updatedTask = await request(`/tasks/${id}`, {
         method: "PUT",
         token,
-        body: payload,
+        body: payload
       });
-      setTasks((prev) => prev.map((t) => (t._id === id ? data.task : t)));
+
+      setTasks((prev) =>
+        prev.map((t) => (t.id === id ? updatedTask : t))
+      );
+
     } catch (err) {
-      alert(err.message || "Update failed");
+      alert("Update failed");
     }
   }
 
+
+
+  // delete task
   async function deleteTask(id) {
-    if (!confirm("Delete this task?")) return;
+    if (!window.confirm("Delete this task?")) return;
+
     try {
-      await request(`/tasks/${id}`, { method: "DELETE", token });
-      setTasks((prev) => prev.filter((t) => t._id !== id));
+      await request(`/tasks/${id}`, {
+        method: "DELETE",
+        token
+      });
+
+      setTasks((prev) => prev.filter((t) => t.id !== id));
+
     } catch (err) {
-      alert(err.message || "Delete failed");
+      alert("Delete failed");
     }
   }
+
+
 
   function formatDate(date) {
     if (!date) return "—";
-    try {
-      return new Date(date).toLocaleDateString("en-IN", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
-    } catch {
-      return date;
-    }
+
+    return new Date(date).toLocaleDateString("en-IN", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    });
   }
 
-  function isOwnerOfTask(t) {
-    // server returns userId populated (object with _id or string)
-    if (!t || !user) return false;
-    const ownerId = t.userId?._id ?? t.userId; // support both shapes
-    if (!ownerId) return false;
-    return String(ownerId) === String(user.id || user._id || user._id);
-  }
+
 
   return (
-    <div className="dashboard-container fade-in">
+    <div className="dashboard-container">
 
-      {/* Header */}
-      <div className="header-card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div>
-          <h1 className="app-title">DigitIt Task Manager</h1>
-          <p className="app-subtitle">
-            Welcome, <strong>{user.email}</strong> • <span className="muted">{user.role}</span>
-            {user.role === "student" && user.teacher ? <> • Teacher: {user.teacher.email}</> : null}
-          </p>
-        </div>
-        {/* optional quick stats in header */}
-        <div style={{ textAlign: "right" }}>
-          <div className="tiny muted">Total tasks</div>
-          <div style={{ fontWeight: 800, fontSize: 20 }}>{tasks.length}</div>
-        </div>
+      {/* HEADER */}
+      <div className="header-card">
+        <h1>DigitIt Task Manager</h1>
+
+        <p>
+          Welcome <strong>{user.email}</strong> • {user.role}
+        </p>
       </div>
 
-      {/* Top actions: create form + filter */}
-      <div className="top-actions" style={{ alignItems: "flex-start" }}>
-        <div className="task-create-box">
-          <TaskForm onSubmit={createTask} />
-        </div>
 
-        <div className="filter-box">
-          <label className="label">Progress</label>
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="all">All</option>
-            <option value="not-started">Not started</option>
-            <option value="in-progress">In progress</option>
-            <option value="completed">Completed</option>
-          </select>
-        </div>
+
+      {/* CREATE TASK */}
+      <div className="task-create-box">
+        <TaskForm onSubmit={createTask} />
       </div>
 
-      {/* Tasks grid */}
-      <div className="tasks-grid" style={{ marginTop: 18 }}>
-        {loading ? (
-          <div className="loading">Loading tasks...</div>
-        ) : error ? (
-          <div className="error">{error}</div>
-        ) : tasks.length === 0 ? (
-          <div className="empty-box">No tasks yet</div>
-        ) : (
-          tasks.map((t) => {
-            const ownerEmail = t.userId?.email ?? (typeof t.userId === "string" ? t.userId : "Unknown");
-            const progress = t.progress || "not-started";
-            const owner = isOwnerOfTask(t);
 
-            return (
-              <article key={t._id} className={`task-card fade-in card-${progress}`}>
-                <div className="task-title">{t.title}</div>
 
-                <div className="task-desc">
-                  {t.description || <span className="muted">No description</span>}
-                </div>
+      {/* FILTER */}
+      <div className="filter-box">
+        <label>Filter by progress</label>
 
-                <div className="task-row" style={{ marginTop: 10 }}>
-                  <span className="muted">Owner:</span>{" "}
-                  <strong style={{ marginLeft: 6 }}>{ownerEmail}</strong>
-                </div>
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="all">All</option>
+          <option value="not_started">Not started</option>
+          <option value="in_progress">In progress</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
 
-                <div className="task-row">
-                  <span className="muted">Due:</span> <span style={{ marginLeft: 6 }}>{formatDate(t.dueDate)}</span>
-                </div>
 
-                <div className="task-row" style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 8 }}>
-                  <span className="muted">Progress:</span>
-                  <select
-                    value={t.progress}
-                    onChange={(e) => updateTask(t._id, { progress: e.target.value })}
-                    style={{ minWidth: 160 }}
-                  >
-                    <option value="not-started">Not started</option>
-                    <option value="in-progress">In progress</option>
-                    <option value="completed">Completed</option>
-                  </select>
-                </div>
 
-                {owner && (
-                  <div className="task-actions" style={{ marginTop: 12 }}>
-                    <button
-                      className="btn btn-ghost small-btn"
-                      onClick={() => {
-                        const newTitle = prompt("Edit task title", t.title);
-                        if (newTitle && newTitle.trim()) updateTask(t._id, { title: newTitle.trim() });
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-danger small-btn"
-                      onClick={() => deleteTask(t._1?._id ? t._1._id : t._id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
-              </article>
-            );
-          })
+      {/* TASK LIST */}
+      <div className="tasks-grid">
+
+        {loading && <p>Loading tasks...</p>}
+
+        {error && <p className="error">{error}</p>}
+
+        {!loading && tasks.length === 0 && (
+          <p>No tasks yet</p>
         )}
+
+
+
+        {tasks.map((task) => (
+
+          <div key={task.id} className="task-card">
+
+            <h3>{task.title}</h3>
+
+            <p>{task.description || "No description"}</p>
+
+            <p>
+              <b>Due:</b> {formatDate(task.dueDate)}
+            </p>
+
+
+
+            <select
+              value={task.progress}
+              onChange={(e) =>
+                updateTask(task.id, {
+                  progress: e.target.value
+                })
+              }
+            >
+              <option value="not_started">Not started</option>
+              <option value="in_progress">In progress</option>
+              <option value="completed">Completed</option>
+            </select>
+
+
+
+            <div className="task-actions">
+
+              <button
+                onClick={() => {
+                  const newTitle = prompt(
+                    "Edit task title",
+                    task.title
+                  );
+
+                  if (newTitle)
+                    updateTask(task.id, { title: newTitle });
+                }}
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={() => deleteTask(task.id)}
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        ))}
+
       </div>
+
     </div>
   );
 }
