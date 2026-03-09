@@ -16,6 +16,7 @@ export class TasksService {
         title: data.title,
         description: data.description,
         dueDate: data.dueDate ? new Date(data.dueDate) : null,
+         progress: "not_started",
         userId: userId
       }
     })

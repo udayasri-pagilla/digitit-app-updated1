@@ -2,6 +2,10 @@ import { Controller, Get, Post, Put, Delete, Body, Param, Req } from '@nestjs/co
 import { TasksService } from './tasks.service'
 import { CreateTaskDto } from './dto/create-task.dto'
 import { UpdateTaskDto } from './dto/update-task.dto'
+import { UseGuards } from '@nestjs/common'
+import { JwtAuthGuard } from '../auth/jwt.guard'
+
+@UseGuards(JwtAuthGuard)
 
 @Controller('tasks')
 export class TasksController {
