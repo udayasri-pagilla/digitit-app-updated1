@@ -5,21 +5,15 @@ const API_URL =
 
 async function request(
   path,
-  { method = "GET", body, token } = {}
+  { method = "GET", body } = {}
 ) {
-
-  const headers = {
-    "Content-Type": "application/json"
-  };
-
-  // attach JWT token
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
 
   const res = await fetch(`${API_URL}${path}`, {
     method,
-    headers,
+    credentials: "include",   // ⭐ send cookies automatically
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: body ? JSON.stringify(body) : undefined
   });
 
