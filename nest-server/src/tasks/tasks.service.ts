@@ -1,14 +1,16 @@
+
+
 import { Injectable, ForbiddenException } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { CreateTaskDto } from './dto/create-task.dto'
 import { UpdateTaskDto } from './dto/update-task.dto'
+import { Progress, Role } from '@prisma/client'
 
 @Injectable()
 export class TasksService {
 
   constructor(private prisma: PrismaService) {}
 
-  // create task
   async create(userId: number, data: CreateTaskDto) {
 
     return this.prisma.task.create({
@@ -16,35 +18,48 @@ export class TasksService {
         title: data.title,
         description: data.description,
         dueDate: data.dueDate ? new Date(data.dueDate) : null,
-         progress: "not_started",
-        userId: userId
+        progress: Progress.not_started,
+        userId
       }
     })
   }
 
-  // get tasks
-  async findAll(userId: number, role: string) {
+  async findAll(userId: number, role: Role, progress?: string) {
 
-    if (role === 'student') {
+    const filter: any = {}
+
+    if (progress && Object.values(Progress).includes(progress as Progress)) {
+      filter.progress = progress
+    }
+
+    if (role === Role.student) {
 
       return this.prisma.task.findMany({
-        where: { userId }
+        where: {
+          userId,
+          ...filter
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
       })
 
     }
 
-    // teacher view
     return this.prisma.task.findMany({
       where: {
         OR: [
-          { userId: userId },
+          { userId },
           { user: { teacherId: userId } }
-        ]
+        ],
+        ...filter
+      },
+      orderBy: {
+        createdAt: 'desc'
       }
     })
   }
 
-  // update task
   async update(taskId: number, userId: number, data: UpdateTaskDto) {
 
     const task = await this.prisma.task.findUnique({
@@ -61,7 +76,6 @@ export class TasksService {
     })
   }
 
-  // delete task
   async remove(taskId: number, userId: number) {
 
     const task = await this.prisma.task.findUnique({

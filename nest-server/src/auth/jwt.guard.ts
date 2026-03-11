@@ -17,16 +17,21 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException('Token missing')
     }
 
-    try {
+   try {
 
-      const decoded = this.jwtService.verify(token)
+  const decoded = this.jwtService.verify(token)
 
-      request.user = decoded
+  request.user = decoded
 
-      return true
+  return true
 
-    } catch {
-      throw new UnauthorizedException('Invalid token')
-    }
+} catch (err) {
+
+  if (err.name === 'TokenExpiredError') {
+    throw new UnauthorizedException('Token expired')
+  }
+
+  throw new UnauthorizedException('Invalid token')
+}
   }
 }

@@ -1,4 +1,10 @@
-import { IsOptional, IsString } from 'class-validator'
+
+import {
+  IsOptional,
+  IsString,
+  IsEnum
+} from 'class-validator'
+
 import { Progress } from '@prisma/client'
 
 export class UpdateTaskDto {
@@ -12,6 +18,6 @@ export class UpdateTaskDto {
   description?: string
 
   @IsOptional()
-  @IsString()
+  @IsEnum(Progress)
   progress?: Progress
 }

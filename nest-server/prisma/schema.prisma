@@ -1,16 +1,11 @@
-// Prisma Client generator
-// This generates the Prisma client library used in NestJS code
 generator client {
   provider = "prisma-client-js"
 }
-// Datasource defines the database connection
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-// Enum for user roles
-// Restricts values to only "student" or "teacher"
 
 enum Role {
   student
@@ -22,34 +17,25 @@ enum Progress {
   in_progress
   completed
 }
-//  user model
 
 model User {
   id           Int      @id @default(autoincrement())
   email        String   @unique
   passwordHash String
   role         Role
-// Foreign key column referencing a teacher
-  // Only students will have this value
 
   teacherId    Int?
 
-   // Student → Teacher relation
-  // teacherId references User.id
-
   teacher      User?    @relation("TeacherStudents", fields: [teacherId], references: [id])
-  
-  // Teacher → Student relation
-  // One teacher can have many students
-
   students     User[]   @relation("TeacherStudents")
-// One user can have many tasks
 
   tasks        Task[]
 
   createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([teacherId])
 }
-// Task table
 
 model Task {
   id          Int      @id @default(autoincrement())
@@ -58,16 +44,12 @@ model Task {
   dueDate     DateTime?
   progress    Progress @default(not_started)
 
-// Foreign key referencing the user who created the task
-
   userId      Int
-
-
-  // Relation connecting Task → User
-  // userId references User.id
-
-
-  user        User     @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([progress])
 }

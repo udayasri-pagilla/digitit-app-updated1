@@ -1,22 +1,30 @@
-import { IsEmail, IsString, IsOptional } from 'class-validator';
 
-// DTO defines what data the signup API expects
+import {
+  IsEmail,
+  IsString,
+  IsOptional,
+  IsEnum,
+  MinLength,
+  IsNotEmpty,
+  IsInt
+} from 'class-validator'
+
+import { Role } from '@prisma/client'
+
 export class SignupDto {
 
-  // validate email format
   @IsEmail()
-  email: string;
+  @IsNotEmpty()
+  email: string
 
-  // password must be string
   @IsString()
-  password: string;
+  @MinLength(8)
+  password: string
 
-  // role must be student or teacher
-  @IsString()
-  role: string;
+  @IsEnum(Role)
+  role: Role
 
-  // optional field
-  // student must include teacherId
   @IsOptional()
-  teacherId?: number;
+  @IsInt()
+  teacherId?: number
 }

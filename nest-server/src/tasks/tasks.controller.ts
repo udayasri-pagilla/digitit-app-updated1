@@ -1,54 +1,75 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, Req } from '@nestjs/common'
+
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  Req,
+  Query,
+  UseGuards,
+  ParseIntPipe
+} from '@nestjs/common'
 import { TasksService } from './tasks.service'
 import { CreateTaskDto } from './dto/create-task.dto'
 import { UpdateTaskDto } from './dto/update-task.dto'
-import { UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '../auth/jwt.guard'
 
 @UseGuards(JwtAuthGuard)
-
 @Controller('tasks')
 export class TasksController {
 
   constructor(private tasksService: TasksService) {}
 
   @Post()
-  create(@Req() req, @Body() data: CreateTaskDto) {
+  create(
+    @Req() req:any,
+    @Body() data: CreateTaskDto
+  ) {
 
-    const user = req.user
+    const user = req.user as any
 
     return this.tasksService.create(user.userId, data)
   }
 
   @Get()
-  getTasks(@Req() req) {
+  getTasks(
+    @Req() req: any,
+    @Query('progress') progress?: string
+  ) {
 
-    const user = req.user
+    const user = req.user as any
 
-    return this.tasksService.findAll(user.userId, user.role)
+    return this.tasksService.findAll(
+      user.userId,
+      user.role,
+      progress
+    )
   }
 
   @Put(':id')
   update(
-    @Param('id') id: string,
-    @Req() req,
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: any,
     @Body() data: UpdateTaskDto
   ) {
 
-    const user = req.user
+    const user = req.user as any
 
-    return this.tasksService.update(Number(id), user.userId, data)
+    return this.tasksService.update(id, user.userId, data)
   }
 
   @Delete(':id')
   delete(
-    @Param('id') id: string,
-    @Req() req
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: any
   ) {
 
-    const user = req.user
+    const user = req.user as any
 
-    return this.tasksService.remove(Number(id), user.userId)
+    return this.tasksService.remove(id, user.userId)
   }
 
 }

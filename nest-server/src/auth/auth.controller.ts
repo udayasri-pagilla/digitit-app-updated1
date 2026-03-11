@@ -23,12 +23,13 @@ export class AuthController {
 
     const result = await this.authService.login(data)
 
-    res.cookie('token', result.token, {
-      httpOnly: true,
-      secure: false, // change to true in production
-      sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000
-    })
+   res.cookie('token', result.token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax',
+  path: '/',
+  maxAge: 24 * 60 * 60 * 1000
+})
 
     return {
       user: result.user
