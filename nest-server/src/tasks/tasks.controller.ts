@@ -34,20 +34,40 @@ export class TasksController {
     return this.tasksService.create(user.userId, data)
   }
 
+  // @Get()
+  // getTasks(
+  //   @Req() req: any,
+  //   @Query('progress') progress?: string
+  // ) {
+
+  //   const user = req.user as any
+
+  //   return this.tasksService.findAll(
+  //     user.userId,
+  //     user.role,
+  //     progress
+  //   )
+  // }
   @Get()
-  getTasks(
-    @Req() req: any,
-    @Query('progress') progress?: string
-  ) {
+getTasks(
+  @Req() req: any,
+  @Query('progress') progress?: string,
+ @Query('page') page?: string,
+@Query('limit') limit?: string
+) {
 
-    const user = req.user as any
+  const user = req.user as any
+   const pageNumber = parseInt(page || '1', 10)
+  const limitNumber = parseInt(limit || '5', 10)
 
-    return this.tasksService.findAll(
-      user.userId,
-      user.role,
-      progress
-    )
-  }
+  return this.tasksService.findAll(
+    user.userId,
+    user.role,
+    progress,
+    pageNumber,
+    limitNumber
+  )
+}
 
   @Put(':id')
   update(

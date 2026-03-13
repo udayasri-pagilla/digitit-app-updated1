@@ -1,0 +1,68 @@
+/* Page styling */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: #f5f6fa;
+}
+
+
+/* Header */
+
+header {
+  background: #2c3e50;
+  color: white;
+  padding: 15px 20px;
+}
+
+
+/* Main container */
+
+.app-shell {
+  max-width: 900px;
+  margin: auto;
+}
+
+
+/* Form */
+
+form {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+form div {
+  margin-bottom: 10px;
+}
+
+input, select {
+  padding: 6px;
+  margin-left: 8px;
+}
+
+button {
+  padding: 6px 10px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+
+/* Task card */
+
+.task-card {
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+}
+
+.task-card h3 {
+  margin: 0;
+}
+
+.task-actions {
+  margin-top: 8px;
+}

@@ -23,42 +23,88 @@ export class TasksService {
       }
     })
   }
+async findAll(
+  userId: number,
+  role: Role,
+  progress?: string,
+  page = 1,
+  limit = 5
+) {
 
-  async findAll(userId: number, role: Role, progress?: string) {
+  const filter: any = {}
 
-    const filter: any = {}
+  if (progress && Object.values(Progress).includes(progress as Progress)) {
+    filter.progress = progress
+  }
 
-    if (progress && Object.values(Progress).includes(progress as Progress)) {
-      filter.progress = progress
-    }
+  const skip = (page - 1) * limit
 
-    if (role === Role.student) {
-
-      return this.prisma.task.findMany({
-        where: {
-          userId,
-          ...filter
-        },
-        orderBy: {
-          createdAt: 'desc'
-        }
-      })
-
-    }
+  if (role === Role.student) {
 
     return this.prisma.task.findMany({
       where: {
-        OR: [
-          { userId },
-          { user: { teacherId: userId } }
-        ],
+        userId,
         ...filter
       },
       orderBy: {
         createdAt: 'desc'
-      }
+      },
+      skip,
+      take: limit
     })
+
   }
+
+  return this.prisma.task.findMany({
+    where: {
+      OR: [
+        { userId },
+        { user: { teacherId: userId } }
+      ],
+      ...filter
+    },
+    orderBy: {
+      createdAt: 'desc'
+    },
+    skip,
+    take: limit
+  })
+}
+  // async findAll(userId: number, role: Role, progress?: string) {
+
+  //   const filter: any = {}
+
+  //   if (progress && Object.values(Progress).includes(progress as Progress)) {
+  //     filter.progress = progress
+  //   }
+
+  //   if (role === Role.student) {
+
+  //     return this.prisma.task.findMany({
+  //       where: {
+  //         userId,
+  //         ...filter
+  //       },
+  //       orderBy: {
+  //         createdAt: 'desc'
+  //       }
+  //     })
+
+  //   }
+
+  //   return this.prisma.task.findMany({
+  //     where: {
+  //       OR: [
+  //         { userId },
+  //         { user: { teacherId: userId } }
+  //       ],
+  //       ...filter
+  //     },
+  //     orderBy: {
+  //       createdAt: 'desc'
+  //     }
+  //   })
+  // }
 
   async update(taskId: number, userId: number, data: UpdateTaskDto) {
 

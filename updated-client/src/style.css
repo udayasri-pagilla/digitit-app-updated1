@@ -1,0 +1,339 @@
+/* Global */
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f4f6fb;
+  color: #333;
+}
+
+/* Header */
+
+header {
+  background: #2c3e50;
+  color: white;
+  padding: 16px 24px;
+}
+
+header button {
+  background: #e74c3c;
+  border: none;
+  padding: 8px 14px;
+  color: white;
+  border-radius: 6px;
+}
+
+header button:hover {
+  background: #c0392b;
+}
+
+
+/* Main container */
+
+main {
+  max-width: 900px;
+  margin: 30px auto;
+}
+
+
+/* Form Card */
+
+form {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+form input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+form button {
+  background: #3498db;
+  border: none;
+  padding: 8px 16px;
+  color: white;
+  border-radius: 6px;
+}
+
+form button:hover {
+  background: #2980b9;
+}
+
+
+/* Filter */
+
+select {
+  padding: 6px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+
+/* Task grid */
+
+.tasks-grid {
+  display: grid;
+  gap: 14px;
+}
+
+
+/* Task card */
+
+.task-card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  border-left: 6px solid #3498db;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.task-card h3 {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+
+/* Task actions */
+
+.task-actions {
+  margin-top: 10px;
+}
+
+.task-actions button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 6px;
+}
+
+.task-actions button:first-child {
+  background: #f1c40f;
+}
+
+.task-actions button:last-child {
+  background: #e74c3c;
+  color: white;
+}
+
+.task-actions button:hover {
+  opacity: 0.85;
+}
+/* ============================= */
+/* Login & Signup Page Styling   */
+/* ============================= */
+
+.auth-center-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6fb;
+}
+
+/* Title */
+
+.auth-main-title {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Login / Signup Card */
+
+.auth-center-card {
+  width: 380px;
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+/* Welcome text */
+
+.auth-welcome {
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Form layout */
+
+.auth-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Labels */
+
+.auth-form-grid label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Inputs */
+
+.auth-form-grid input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* Button */
+
+.auth-form-grid button {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background: #3498db;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.auth-form-grid button:hover {
+  background: #2980b9;
+}
+
+/* Footer */
+
+.auth-footer {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.auth-footer button {
+  background: none;
+  border: none;
+  color: #3498db;
+  cursor: pointer;
+}
+/* =============================== */
+/* Signup Page Styling Only        */
+/* =============================== */
+
+.auth-center-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6fb;
+}
+
+/* Card */
+
+.auth-card {
+  width: 400px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+}
+
+/* Header */
+
+.auth-stacked-header-plain {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth-title {
+  margin: 0;
+  font-size: 24px;
+}
+
+.auth-subnote {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Form */
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Inputs */
+
+.signup-form input[type="email"],
+.signup-form input[type="password"],
+.signup-form input[type="text"],
+.signup-form input[placeholder] {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* Role radio buttons */
+
+.signup-form div {
+  display: flex;
+  gap: 15px;
+  margin-top: 5px;
+}
+
+/* Buttons */
+
+.signup-form button {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background: #3498db;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.signup-form button:hover {
+  background: #2980b9;
+}
+
+/* Back button */
+
+.signup-form button[type="button"] {
+  background: #95a5a6;
+}
+
+.signup-form button[type="button"]:hover {
+  background: #7f8c8d;
+}
+
+/* Messages */
+
+.success {
+  color: green;
+  text-align: center;
+  font-size: 14px;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Muted text */
+
+.muted {
+  color: #777;
+}

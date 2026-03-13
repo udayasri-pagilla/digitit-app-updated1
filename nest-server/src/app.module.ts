@@ -12,6 +12,10 @@ import { TasksModule } from './tasks/tasks.module'
 @Module({
   imports: [
 
+ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 5
+    }),
     // Load environment variables from .env file
     // isGlobal: true means ConfigService can be used in any module
     ConfigModule.forRoot({
