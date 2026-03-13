@@ -1,31 +1,31 @@
+
 import { Module } from '@nestjs/common'
-
-// ConfigModule allows NestJS to read variables from .env file
 import { ConfigModule } from '@nestjs/config'
-
-// Import Auth module (handles signup/login)
 import { AuthModule } from './auth/auth.module'
-
-// Import Tasks module (handles task APIs)
 import { TasksModule } from './tasks/tasks.module'
+import { ThrottlerModule } from '@nestjs/throttler'
 
 @Module({
   imports: [
 
-ThrottlerModule.forRoot({
-      ttl: 60,
-      limit: 5
+    // Rate limiting configuration
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000, // 60 seconds (milliseconds)
+          limit: 5    // max 5 requests in that time window
+        }
+      ]
     }),
-    // Load environment variables from .env file
+    // Load environment variables from the .env file
     // isGlobal: true means ConfigService can be used in any module
+
     ConfigModule.forRoot({
       isGlobal: true
     }),
-
-    // Register Auth module
+ // Register Auth module for authentication features
     AuthModule,
-
-    // Register Tasks module
+    // Register Tasks module for task management APIs
     TasksModule
   ],
 })

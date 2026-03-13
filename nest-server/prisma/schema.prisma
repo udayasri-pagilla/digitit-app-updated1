@@ -1,55 +1,101 @@
+// Prisma Client generator
+// This generates the Prisma Client used to interact with the database in Node.js
 generator client {
   provider = "prisma-client-js"
 }
 
+// Database connection configuration
+// Uses PostgreSQL and reads the connection URL from the environment variable DATABASE_URL
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+// Enum to define user roles in the system
+// A user can either be a student or a teacher
 enum Role {
   student
   teacher
 }
 
+// Enum to track task progress status
 enum Progress {
   not_started
   in_progress
   completed
 }
 
+// User model represents both teachers and students
 model User {
+
+  // Primary key (auto-incremented unique ID)
   id           Int      @id @default(autoincrement())
+
+  // Unique email for login and identification
   email        String   @unique
+
+  // Stores hashed password for security
   passwordHash String
+
+  // Role determines whether the user is a student or teacher
   role         Role
 
+  // If the user is a student, this stores their teacher's ID
   teacherId    Int?
 
+  // Self-relation: A student belongs to a teacher
   teacher      User?    @relation("TeacherStudents", fields: [teacherId], references: [id])
+
+  // Self-relation: A teacher can have multiple students
   students     User[]   @relation("TeacherStudents")
 
+  // A user can have multiple tasks assigned
   tasks        Task[]
 
+  // Timestamp when the user was created
   createdAt    DateTime @default(now())
+
+  // Automatically updated when the record is modified
   updatedAt    DateTime @updatedAt
 
+  // Index to speed up queries filtering by teacherId
   @@index([teacherId])
 }
 
+// Task model represents tasks assigned to students
 model Task {
+
+  // Primary key (auto-incremented unique ID)
   id          Int      @id @default(autoincrement())
+
+  // Title of the task
   title       String
+
+  // Optional description providing more details about the task
   description String?
+
+  // Optional due date for the task
   dueDate     DateTime?
+
+  // Tracks the current progress of the task
   progress    Progress @default(not_started)
 
+  // Foreign key referencing the user who owns the task
   userId      Int
+
+  // Relationship with the User model
+  // If the user is deleted, their tasks are also deleted (Cascade delete)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  // Timestamp when the task was created
   createdAt   DateTime @default(now())
+
+  // Automatically updated when the task is modified
   updatedAt   DateTime @updatedAt
 
+  // Index to speed up queries filtering tasks by user
   @@index([userId])
+
+  // Index to quickly filter tasks based on progress status
   @@index([progress])
 }
